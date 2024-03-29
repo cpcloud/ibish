@@ -31,6 +31,7 @@ classifiers = [
 [tool.poetry.dependencies]
 python = "^3.9"
 ibis-framework = { git = "https://github.com/ibis-project/ibis.git" }
+pandas = "^2.2.1"
 
 [tool.poetry.group.dev.dependencies]
 codespell = { version = ">=2.2.6,<3", extras = [
