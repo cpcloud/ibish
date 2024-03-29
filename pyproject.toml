@@ -1,0 +1,212 @@
+[tool.poetry]
+name = "ibish"
+version = "1.0.0"
+packages = [{ include = "ibish" }]
+homepage = "https://github.com/cpcloud/ibish"
+repository = "https://github.com/cpcloud/ibish"
+description = "The Unix backend for Ibis"
+authors = ["Ibis Maintainers <maintainers@ibis-project.org>"]
+maintainers = ["Ibis Maintainers <maintainers@ibis-project.org>"]
+license = "Apache-2.0"
+readme = "README.md"
+classifiers = [
+  "Development Status :: 6 - Mature",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Science/Research",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python",
+  "Programming Language :: Awk",
+  "Programming Language :: Unix Shell",
+  "Topic :: Database :: Front-Ends",
+  "Topic :: Scientific/Engineering",
+  "Topic :: Software Development :: Code Generators",
+  "Topic :: Software Development :: User Interfaces",
+]
+
+[tool.poetry.urls]
+"Issue Tracker" = "https://github.com/ibis-project/ibis/issues"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+ibis-framework = { git = "https://github.com/ibis-project/ibis.git" }
+
+[tool.poetry.group.dev.dependencies]
+codespell = { version = ">=2.2.6,<3", extras = [
+  "hard-encoding-detection",
+  "toml",
+] }
+ipython = ">=8.7.0,<9"
+poetry-plugin-export = ">=1.6.0,<2"
+poetry-dynamic-versioning = ">=0.18.0,<2"
+pre-commit = ">=3.1,<4"
+ruff = ">=0.1.8"
+
+[tool.poetry.group.test.dependencies]
+pytest = ">=8.0.2,<9"
+pytest-clarity = ">=1.0.1,<2"
+pytest-randomly = ">=3.10.1,<4"
+pytest-xdist = ">=2.3.0,<4"
+
+
+[tool.poetry.plugins."ibis.backends"]
+unix = "ibish"
+
+[tool.pytest.ini_options]
+doctest_optionflags = [
+  "NORMALIZE_WHITESPACE",
+  "IGNORE_EXCEPTION_DETAIL",
+  "ELLIPSIS",
+]
+xfail_strict = true
+addopts = [
+  "--strict-markers",
+  "--strict-config",
+  "--benchmark-disable",
+  "--benchmark-group-by=name",
+  "--benchmark-sort=name",
+]
+norecursedirs = [
+  "**/snapshots",
+  ".benchmarks",
+  ".direnv",
+  ".git",
+  ".github",
+  ".hypothesis",
+  ".pytest_cache",
+  ".streamlit",
+  "LICENSES",
+  "ci",
+  "conda-lock",
+  "dev",
+  "docker",
+  "docs",
+  "nix",
+  "result*",
+]
+empty_parameter_set_mark = "fail_at_collect"
+
+[tool.ruff]
+line-length = 88
+respect-gitignore = true
+exclude = [".direnv", "result-*", "*_py310.py", "decompiled.py"]
+target-version = "py39"
+
+[tool.ruff.lint]
+select = [
+  "B",   # flake8-bugbear
+  "BLE", # flake8-blind-except
+  "C4",  # comprehensions
+  "D",   # pydocstyle
+  "E",   # pycodestyle
+  "EXE", # flake8-executable
+  "F",   # pyflakes
+  "FA",  # flake8-future-annotations
+  "G",   # flake8-logging-format
+  "FLY", # flynt (format string conversion)
+  "I",   # isort
+  "ICN", # flake8-import-conventions
+  "INP", # flake8-no-pep420 (implicit namespace packages)
+  "ISC", # flake8-implicit-str-concat
+  "PGH", # pygrep-hooks
+  "PIE", # flake8-pie
+  "PL",  # pylint
+  "RET", # flake8-return
+  "RUF", # ruff-specific rules
+  "SIM", # flake8-simplify
+  "T10", # flake8-debugger
+  "T20", # flake8-print
+  "TCH", # flake8-type-checking
+  "TID", # flake8-tidy-imports
+  "UP",  # pyupgrade
+  "W",   # pycodestyle
+  "YTT", # flake8-2020
+]
+ignore = [
+  "B028",    # required stacklevel argument to warn
+  "B904",    # raise from e or raise from None in exception handlers
+  "C408",    # dict(...) as literal
+  "D100",    # public module
+  "D101",    # public class
+  "D102",    # public method
+  "D103",    # public function
+  "D104",    # public package
+  "D105",    # magic methods
+  "D106",    # nested class
+  "D107",    # init
+  "D202",    # blank lines after function docstring
+  "D203",    # blank line before class docstring
+  "D213",    # Multi-line docstring summary should start at the second line
+  "D401",    # Imperative mood
+  "D402",    # First line should not be the function's signature
+  "D413",    # Blank line required after last section
+  "E501",    # line-too-long, this is automatically enforced by ruff format
+  "E731",    # lambda-assignment
+  "ISC001",  # single line implicit string concat, handled by ruff format
+  "PGH003",  # blanket-type-ignore
+  "PLC0105", # covariant type parameters should have a _co suffix
+  "PLR0124", # name compared with self, e.g., a == a
+  "PLR0911", # too many return statements
+  "PLR0912", # too many branches
+  "PLR0913", # too many arguments
+  "PLR0915", # too many statements
+  "PLR2004", # forces everything to be a constant
+  "PLW2901", # overwriting loop variable
+  "RET504",  # unnecessary-assign, these are useful for debugging
+  "RET505",  # superfluous-else-return, stylistic choice
+  "RET506",  # superfluous-else-raise, stylistic choice
+  "RET507",  # superfluous-else-continue, stylistic choice
+  "RET508",  # superfluous-else-break, stylistic choice
+  "RUF005",  # splat instead of concat
+  "RUF012",  # Mutable class attributes should be annotated with `typing.ClassVar`
+  "SIM102",  # nested ifs
+  "SIM108",  # convert everything to ternary operator
+  "SIM114",  # combine `if` branches using logical `or` operator
+  "SIM116",  # dictionary instead of `if` statements
+  "SIM117",  # nested with statements
+  "SIM118",  # remove .keys() calls from dictionaries
+  "SIM300",  # yoda conditions
+  "UP007",   # Optional[str] -> str | None
+]
+# none of these codes will be automatically fixed by ruff
+unfixable = [
+  "T201",   # print statements
+  "F401",   # unused imports
+  "RUF100", # unused noqa comments
+  "F841",   # unused variables
+]
+
+[tool.ruff.lint.pyupgrade]
+keep-runtime-typing = true
+
+[tool.ruff.lint.isort]
+required-imports = ["from __future__ import annotations"]
+
+[tool.ruff.lint.per-file-ignores]
+"*test*.py" = [
+  "D", # ignore all docstring lints in tests
+]
+"{docs,ci}/**/*.py" = ["INP001"]
+"ci/release/verify_release.py" = ["T201"] # prints output using `print`
+
+[tool.ruff.format]
+docstring-code-format = true
+docstring-code-line-length = 88
+
+[tool.distutils.bdist_wheel]
+# universal = true is for projects that support py2 and py3, and do not have C
+# extensions
+universal = false
+
+[tool.poetry-dynamic-versioning]
+enable = true
+dirty = true
+style = "pep440"
+pattern = '^(?P<base>\d+(\.\d+)*)'
+# index=0 bumps the major version, to handle backports that occur after a breaking change commit
+format-jinja = "{% if distance == 0 %}{{ base }}{% else %}{{ bump_version(base, index=0) }}.dev{{ distance }}{% endif %}"
+
+[build-system]
+requires = ["poetry-core>=1.1.0", "poetry-dynamic-versioning"]
+build-backend = "poetry_dynamic_versioning.backend"
