@@ -239,7 +239,11 @@ if __name__ == "__main__":
     result = expr.execute()
     print(result)  # noqa: T201
 
-    join = t.join(t, ["year"]).select("year")
+    join = (
+        t.filter(lambda t: t.year == 2007)
+        .join(backend.table("q"), ["year"])
+        .select("year")
+    )
     print(backend.explain(join))  # noqa: T201
 
     result = join.execute()
