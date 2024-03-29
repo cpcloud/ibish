@@ -206,7 +206,9 @@ class Backend(BaseBackend, NoUrl):
 
 def connect(*args, **kwargs):
     """Create a Unix backend."""
-    return Backend().do_connect(*args, **kwargs)
+    instance = Backend()
+    instance.do_connect(*args, **kwargs)
+    return instance
 
 
 if __name__ == "__main__":
