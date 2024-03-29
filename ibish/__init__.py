@@ -25,6 +25,8 @@ from ibish.compiler import Offset, translate
 
 __version__ = "0.0.0"
 
+__all__ = ("connect",)
+
 
 @replace(PandasJoin)
 def sort_before_join(_):
@@ -200,6 +202,11 @@ class Backend(BaseBackend, NoUrl):
 
     def drop_view(self, *_, **__) -> ir.Table:
         raise NotImplementedError(self.name)
+
+
+def connect(*args, **kwargs):
+    """Create a Unix backend."""
+    return Backend().do_connect(*args, **kwargs)
 
 
 if __name__ == "__main__":
