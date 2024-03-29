@@ -614,7 +614,7 @@ toolz = ">=0.11,<1"
 typing-extensions = ">=4.3.0,<5"
 
 [package.extras]
-all = ["black (>=22.1.0,<25)", "clickhouse-connect[arrow,numpy,pandas] (>=0.5.23,<1)", "dask[array,dataframe] (>=2022.9.1,<2024.3.0)", "datafusion (>=0.6,<37)", "db-dtypes (>=0.3,<2)", "deltalake (>=0.9.0,<1)", "duckdb (>=0.8.1,<1)", "fsspec (<2024.3.0)", "geopandas (>=0.6,<1)", "google-cloud-bigquery (>=3,<4)", "google-cloud-bigquery-storage (>=2,<3)", "graphviz (>=0.16,<1)", "impyla (>=0.17,<1)", "oracledb (>=1.3.1,<3)", "packaging (>=21.3,<25)", "pins[gcs] (>=0.8.3,<1)", "polars (>=0.19.3,<1)", "psycopg2 (>=2.8.4,<3)", "pydata-google-auth (>=1.4.0,<2)", "pydruid[sqlalchemy] (>=0.6.5,<1)", "pyexasol[pandas] (>=0.25.2,<1)", "pymysql (>=1,<2)", "pyodbc (>=4.0.39,<6)", "pyspark (>=3,<4)", "regex (>=2021.7.6)", "shapely (>=2,<3)", "snowflake-connector-python (>=3.0.2,!=3.3.0b1,<4)", "trino (>=0.321,<1)"]
+all = ["black (>=22.1.0,<25)", "clickhouse-connect[arrow,numpy,pandas] (>=0.5.23,<1)", "dask[array,dataframe] (>=2022.9.1,<2024.3.0)", "datafusion (>=0.6,<37)", "db-dtypes (>=0.3,<2)", "deltalake (>=0.9.0,<1)", "duckdb (>=0.8.1,<1)", "fsspec (<2024.3.0)", "geopandas (>=0.6,<1)", "google-cloud-bigquery (>=3,<4)", "google-cloud-bigquery-storage (>=2,<3)", "graphviz (>=0.16,<1)", "impyla (>=0.17,<1)", "oracledb (>=1.3.1,<3)", "packaging (>=21.3,<25)", "pins[gcs] (>=0.8.3,<1)", "polars (>=0.19.3,<1)", "psycopg2 (>=2.8.4,<3)", "pydata-google-auth (>=1.4.0,<2)", "pydruid[sqlalchemy] (>=0.6.5,<1)", "pyexasol[pandas] (>=0.25.2,<1)", "pymysql (>=1,<2)", "pyodbc (>=4.0.39,<6)", "pyspark (>=3,<4)", "regex (>=2021.7.6)", "shapely (>=2,<3)", "snowflake-connector-python (>=3.0.2,<4,!=3.3.0b1)", "trino (>=0.321,<1)"]
 bigquery = ["db-dtypes (>=0.3,<2)", "google-cloud-bigquery (>=3,<4)", "google-cloud-bigquery-storage (>=2,<3)", "pydata-google-auth (>=1.4.0,<2)"]
 clickhouse = ["clickhouse-connect[arrow,numpy,pandas] (>=0.5.23,<1)"]
 dask = ["dask[array,dataframe] (>=2022.9.1,<2024.3.0)", "regex (>=2021.7.6)"]
@@ -636,7 +636,7 @@ polars = ["packaging (>=21.3,<25)", "polars (>=0.19.3,<1)"]
 postgres = ["psycopg2 (>=2.8.4,<3)"]
 pyspark = ["packaging (>=21.3,<25)", "pyspark (>=3,<4)"]
 risingwave = ["psycopg2 (>=2.8.4,<3)"]
-snowflake = ["snowflake-connector-python (>=3.0.2,!=3.3.0b1,<4)"]
+snowflake = ["snowflake-connector-python (>=3.0.2,<4,!=3.3.0b1)"]
 sqlite = ["regex (>=2021.7.6)"]
 trino = ["trino (>=0.321,<1)"]
 visualization = ["graphviz (>=0.16,<1)"]
@@ -644,8 +644,8 @@ visualization = ["graphviz (>=0.16,<1)"]
 [package.source]
 type = "git"
 url = "https://github.com/ibis-project/ibis.git"
-reference = "HEAD"
-resolved_reference = "bb736fe94c5324e0696d5a6f96aab9c8c6247e5c"
+reference = "a67847caf4756dd07e3f42b25318117bbf767e2f"
+resolved_reference = "a67847caf4756dd07e3f42b25318117bbf767e2f"
 
 [[package]]
 name = "identify"
@@ -2168,4 +2168,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "d4af63978f910bfd6c357cf453bf464586c6d77388122a7652c0f3575a6317bf"
+content-hash = "1848223b4fc20edad9b0d37c3ffe32a7357020ddecd938cd9a20c0d69e5758c0"
