@@ -10,10 +10,9 @@ from pathlib import Path
 from subprocess import Popen
 from typing import Any
 
-import pandas as pd
-
 import ibis.expr.operations as ops
 import ibis.expr.types as ir
+import pandas as pd
 from ibis.backends import BaseBackend, NoUrl
 from ibis.backends.pandas.rewrites import (
     PandasJoin,
@@ -21,8 +20,9 @@ from ibis.backends.pandas.rewrites import (
     replace_parameter,
     rewrite_join,
 )
-from ibis.backends.unix.compiler import Offset, translate
 from ibis.common.patterns import replace
+
+from ibish.compiler import Offset, translate
 
 
 @replace(PandasJoin)
@@ -199,9 +199,9 @@ class Backend(BaseBackend, NoUrl):
 
 
 if __name__ == "__main__":
-    # Create a backend with some data
-    unix = Backend()
-    backend = unix.connect({"p": "/data/penguins.csv", "q": "/data/penguins.csv"})
+    import ibis
+
+    backend = ibis.unix.connect({"p": "/data/penguins.csv", "q": "/data/penguins.csv"})
     # Create an expression
     t = backend.table("p")
     q = backend.table("q")
