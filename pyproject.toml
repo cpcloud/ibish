@@ -30,7 +30,7 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = "^3.9"
-ibis-framework = { git = "https://github.com/ibis-project/ibis.git" }
+ibis-framework = { git = "https://github.com/ibis-project/ibis.git", rev = "a67847caf4756dd07e3f42b25318117bbf767e2f" }
 pandas = "^2.2.1"
 pyarrow = "^15.0.2"
 
