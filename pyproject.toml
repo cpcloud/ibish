@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ibish"
-version = "1.0.0"
+version = "1.0.1"
 packages = [{ include = "ibish" }]
 homepage = "https://github.com/cpcloud/ibish"
 repository = "https://github.com/cpcloud/ibish"
