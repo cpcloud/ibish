@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ibish"
-version = "1.0.0"
+version = "0.0.0"
 packages = [{ include = "ibish" }]
 homepage = "https://github.com/cpcloud/ibish"
 repository = "https://github.com/cpcloud/ibish"
@@ -32,6 +32,7 @@ classifiers = [
 python = "^3.9"
 ibis-framework = { git = "https://github.com/ibis-project/ibis.git" }
 pandas = "^2.2.1"
+pyarrow = "^15.0.2"
 
 [tool.poetry.group.dev.dependencies]
 codespell = { version = ">=2.2.6,<3", extras = [

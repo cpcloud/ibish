@@ -44,12 +44,12 @@ module.exports = {
       {
         replacements: [
           {
-            files: ["ibis/__init__.py"],
+            files: ["ibish/__init__.py"],
             from: '__version__ = ".*"',
             to: '__version__ = "${nextRelease.version}"',
             results: [
               {
-                file: "ibis/__init__.py",
+                file: "ibish/__init__.py",
                 hasChanged: true,
                 numMatches: 1,
                 numReplacements: 1
@@ -65,7 +65,6 @@ module.exports = {
       {
         verifyConditionsCmd:
           "ci/release/verify_conditions.sh ${options.dryRun}",
-        verifyReleaseCmd: "ci/release/verify_release.sh ${nextRelease.version}",
         prepareCmd: "ci/release/prepare.sh ${nextRelease.version}",
         publishCmd: "ci/release/publish.sh"
       }
@@ -80,7 +79,7 @@ module.exports = {
     [
       "@semantic-release/git",
       {
-        assets: ["pyproject.toml", "docs/release_notes.md", "ibis/__init__.py"],
+        assets: ["pyproject.toml", "ibish/__init__.py"],
         message: "chore(release): ${nextRelease.version}"
       }
     ]

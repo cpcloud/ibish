@@ -12,7 +12,6 @@ from typing import Any
 
 import ibis.expr.operations as ops
 import ibis.expr.types as ir
-import pandas as pd
 from ibis.backends import BaseBackend, NoUrl
 from ibis.backends.pandas.rewrites import (
     PandasJoin,
@@ -23,6 +22,8 @@ from ibis.backends.pandas.rewrites import (
 from ibis.common.patterns import replace
 
 from ibish.compiler import Offset, translate
+
+__version__ = "0.0.0"
 
 
 @replace(PandasJoin)
@@ -77,6 +78,7 @@ class Backend(BaseBackend, NoUrl):
 
     def table(self, name: str) -> ir.Table:
         import ibis.expr.schema as sch
+        import pandas as pd
 
         schema = sch.infer(pd.read_csv(self._tables[name], header=0, nrows=100))
         return ops.DatabaseTable(name, schema, self).to_expr()
@@ -140,6 +142,8 @@ class Backend(BaseBackend, NoUrl):
         params: Mapping[ir.Expr, object] | None = None,
         **kwargs: Any,
     ):
+        import pandas as pd
+
         schema = expr.as_table().schema()
         columns = schema.names
         pandas_schema = dict(schema.to_pandas())
