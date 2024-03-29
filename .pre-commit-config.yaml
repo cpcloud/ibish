@@ -1,0 +1,144 @@
+ci:
+  autofix_commit_msg: "style: auto fixes from pre-commit.ci hooks"
+  autofix_prs: false
+  autoupdate_commit_msg: "chore(deps): pre-commit.ci autoupdate"
+  skip:
+    - actionlint-system
+    - deadnix
+    - nixpkgs-fmt
+    - prettier
+    - ruff
+    - ruff-format
+    - shellcheck
+    - shfmt
+    - statix
+    - taplo
+default_stages:
+  - commit
+repos:
+  - repo: https://github.com/rhysd/actionlint
+    rev: v1.6.27
+    hooks:
+      - id: actionlint-system
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.2.6
+    hooks:
+      - id: codespell
+        additional_dependencies:
+          - tomli
+  - repo: local
+    hooks:
+      - id: ruff
+        name: ruff
+        description: "Run 'ruff' for extremely fast Python linting"
+        entry: ruff
+        language: system
+        types_or:
+          - python
+          - pyi
+        args: ["check", "--force-exclude", "--output-format=full", "--fix"]
+        require_serial: true
+        minimum_pre_commit_version: "2.9.2"
+  - repo: local
+    hooks:
+      - id: ruff-format
+        name: ruff-format
+        description: "Run 'ruff' for extremely fast Python linting"
+        entry: ruff
+        language: system
+        types_or:
+          - python
+          - pyi
+        args: ["format", "--force-exclude"]
+        require_serial: true
+        minimum_pre_commit_version: "2.9.2"
+  - repo: https://github.com/adrienverge/yamllint
+    rev: v1.35.1
+    hooks:
+      - id: yamllint
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: check-added-large-files
+      - id: check-case-conflict
+      - id: check-executables-have-shebangs
+      - id: check-merge-conflict
+      - id: check-shebang-scripts-are-executable
+      - id: check-vcs-permalinks
+      - id: destroyed-symlinks
+      - id: detect-aws-credentials
+        args: ["--allow-missing-credentials"]
+      - id: detect-private-key
+      - id: end-of-file-fixer
+      - id: fix-byte-order-marker
+      - id: mixed-line-ending
+      - id: trailing-whitespace
+  - repo: meta
+    hooks:
+      - id: check-hooks-apply
+      - id: check-useless-excludes
+  - repo: local
+    hooks:
+      - id: prettier
+        name: prettier
+        language: system
+        entry: prettier
+        args: ["--write"]
+        types_or:
+          - javascript
+          - json
+          - markdown
+          - yaml
+      - id: taplo
+        name: taplo
+        language: system
+        entry: taplo
+        args: ["fmt"]
+        types:
+          - toml
+      - id: shellcheck
+        name: shellcheck
+        language: system
+        entry: shellcheck
+        types_or:
+          - sh
+          - shell
+          - ash
+          - bash
+          - bats
+          - dash
+          - ksh
+      - id: shfmt
+        name: shfmt
+        language: system
+        entry: shfmt
+        args: ["-i", "2", "-sr", "-s"]
+        types_or:
+          - sh
+          - shell
+          - ash
+          - bash
+          - bats
+          - dash
+          - ksh
+      - id: nixpkgs-fmt
+        name: nixpkgs-fmt
+        language: system
+        entry: nixpkgs-fmt
+        types:
+          - nix
+      - id: statix
+        name: statix
+        language: system
+        entry: statix
+        args: ["fix"]
+        pass_filenames: false
+        types:
+          - nix
+      - id: deadnix
+        name: deadnix
+        language: system
+        entry: deadnix
+        args: ["--edit", "--fail"]
+        types:
+          - nix
