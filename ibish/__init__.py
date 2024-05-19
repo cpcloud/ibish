@@ -212,39 +212,45 @@ def connect(*args, **kwargs):
 
 
 if __name__ == "__main__":
-    import ibis
+    import argparse
 
-    backend = ibis.unix.connect({"p": "/data/penguins.csv", "q": "/data/penguins.csv"})
-    # Create an expression
-    t = backend.table("p")
-    q = backend.table("q")
-    expr = (
-        t.filter([t.year == 2009])
-        .select(
-            "year", "species", "flipper_length_mm", island=lambda t: t.island.lower()
+    def main(args):
+        import ibis
+
+        backend = ibis.unix.connect({"p": args.penguins_path, "q": args.penguins_path})
+        # Create an expression
+        t = backend.table("p")
+        q = backend.table("q")
+        expr = (
+            t.filter([t.year == 2009])
+            .select(
+                "year",
+                "species",
+                "flipper_length_mm",
+                island=lambda t: t.island.lower(),
+            )
+            .group_by("island", "species")
+            .agg(
+                n=lambda t: t.count(),
+                avg=lambda t: t.island.upper().length().mean(),
+                tot=lambda t: t.island.length().sum(where=True),
+            )
+            .order_by("n")
+            .mutate(ilength=lambda t: t.island.length())
+            .limit(5)
         )
-        .group_by("island", "species")
-        .agg(
-            n=lambda t: t.count(),
-            avg=lambda t: t.island.upper().length().mean(),
-            tot=lambda t: t.island.length().sum(where=True),
-        )
-        .order_by("n")
-        .mutate(ilength=lambda t: t.island.length())
-        .limit(5)
-    )
-    pipeline = backend.explain(expr)
-    print(pipeline)  # noqa: T201
+        pipeline = backend.explain(expr)
+        print(pipeline)  # noqa: T201
 
-    result = expr.execute()
-    print(result)  # noqa: T201
+        result = expr.execute()
+        print(result)  # noqa: T201
 
-    join = (
-        t.filter(lambda t: t.year == 2007)
-        .join(backend.table("q"), ["year"])
-        .select("year")
-    )
-    print(backend.explain(join))  # noqa: T201
+        join = t.filter(lambda t: t.year == 2007).join(q, "year").select("year")
+        print(backend.explain(join))  # noqa: T201
 
-    result = join.execute()
-    print(result)  # noqa: T201
+        result = join.execute()
+        print(result)  # noqa: T201
+
+    p = argparse.ArgumentParser()
+    p.add_argument("penguins_path", help="path to Palmer penguins data")
+    main(p.parse_args())
