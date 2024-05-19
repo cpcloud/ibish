@@ -62,28 +62,12 @@ doctest_optionflags = [
   "ELLIPSIS",
 ]
 xfail_strict = true
-addopts = [
-  "--strict-markers",
-  "--strict-config",
-  "--benchmark-disable",
-  "--benchmark-group-by=name",
-  "--benchmark-sort=name",
-]
+addopts = ["--strict-markers", "--strict-config"]
 norecursedirs = [
-  "**/snapshots",
-  ".benchmarks",
   ".direnv",
   ".git",
   ".github",
-  ".hypothesis",
   ".pytest_cache",
-  ".streamlit",
-  "LICENSES",
-  "ci",
-  "conda-lock",
-  "dev",
-  "docker",
-  "docs",
   "nix",
   "result*",
 ]
@@ -92,7 +76,7 @@ empty_parameter_set_mark = "fail_at_collect"
 [tool.ruff]
 line-length = 88
 respect-gitignore = true
-exclude = [".direnv", "result-*", "*_py310.py", "decompiled.py"]
+exclude = [".direnv", "result-*"]
 target-version = "py39"
 
 [tool.ruff.lint]
