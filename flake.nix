@@ -38,7 +38,6 @@
         actionlint
         deadnix
         git
-        just
         nixpkgs-fmt
         nodePackages.prettier
         shellcheck
