@@ -276,7 +276,7 @@ def filt(op, *, predicates, parent):
     ]
 
 
-@translate.register(ops.JoinTable)
+@translate.register(ops.Reference)
 @translate.register(PandasRename)
 def no_op(op, *, parent, **_):
     return ["cat", parent]
