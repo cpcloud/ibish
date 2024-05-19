@@ -23,7 +23,7 @@ from ibis.common.patterns import replace
 
 from ibish.compiler import Offset, translate
 
-__version__ = "1.0.3"
+__version__ = "1.0.4"
 
 __all__ = ("connect",)
 
