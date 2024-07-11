@@ -62,6 +62,7 @@
           nodejs
         ])
         ++ preCommitDeps;
+        PYTHONPATH = ".";
       };
     in
     rec {

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import tempfile
 import textwrap
 from functools import singledispatch
 from typing import TYPE_CHECKING
@@ -280,6 +281,18 @@ def filt(op, *, predicates, parent):
 @translate.register(PandasRename)
 def no_op(op, *, parent, **_):
     return ["cat", parent]
+
+
+@translate.register(ops.InMemoryTable)
+def in_memory_table(op, **_):
+    import pyarrow.csv as pcsv
+
+    table = op.data.to_pyarrow(op.schema)
+    with tempfile.NamedTemporaryFile(delete=False) as path:
+        pcsv.write_csv(
+            table, path, write_options=pcsv.WriteOptions(quoting_style="none")
+        )
+    return ["cat", path.name]
 
 
 @translate.register(PandasJoin)

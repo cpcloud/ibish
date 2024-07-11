@@ -45,10 +45,14 @@ def split_limit_with_offset(_, **__):
 class Backend(BaseBackend, NoUrl):
     name = "unix"
     dialect = None
+    supports_in_memory_tables = True
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._tables = {}
+
+    def _register_in_memory_table(self, op: ops.InMemoryTable):
+        pass
 
     def do_connect(self, tables: Mapping[str, Path | str] | None = None) -> None:
         """Construct a client from a dictionary of paths.
@@ -217,23 +221,34 @@ if __name__ == "__main__":
     def main(args):
         import ibis
 
-        backend = ibis.unix.connect({"p": args.penguins_path, "q": args.penguins_path})
+        backend = ibis.unix.connect({"penguins": args.penguins_path})
         # Create an expression
-        t = backend.table("p")
-        q = backend.table("q")
+        t = backend.table("penguins")
+        scinames = ibis.memtable(
+            {
+                "species": ["Gentoo", "Adelie", "Chinstrap"],
+                "science_name": [
+                    "Pygoscelis papua",
+                    "Pygoscelis adeliae",
+                    "Pygoscelis antarcticus",
+                ],
+            }
+        )
         expr = (
-            t.filter([t.year == 2009])
+            t.join(scinames, "species")
+            .filter(lambda t: t.year == 2009)
             .select(
                 "year",
-                "species",
+                "science_name",
                 "flipper_length_mm",
                 island=lambda t: t.island.lower(),
             )
-            .group_by("island", "species")
+            .group_by("island", "science_name")
             .agg(
                 n=lambda t: t.count(),
                 avg=lambda t: t.island.upper().length().mean(),
                 tot=lambda t: t.island.length().sum(where=True),
+                flavg=lambda t: t.flipper_length_mm.mean(),
             )
             .order_by("n")
             .mutate(ilength=lambda t: t.island.length())
@@ -243,12 +258,6 @@ if __name__ == "__main__":
         print(pipeline)  # noqa: T201
 
         result = expr.execute()
-        print(result)  # noqa: T201
-
-        join = t.filter(lambda t: t.year == 2007).join(q, "year").select("year")
-        print(backend.explain(join))  # noqa: T201
-
-        result = join.execute()
         print(result)  # noqa: T201
 
     p = argparse.ArgumentParser()
